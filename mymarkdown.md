@@ -12,6 +12,8 @@
 * 01 - [SSH](#SSH)
 * 02 - [Vagrant](#Vagrant)
 * 03 - [Firewall](#Firewall)
+* 04 - [Reverse Proxy](#ReverseProxy)
+* 05 - [Sicherheitsmassnahmen](#Sicherheitsmassnahmen)
 
 
 # Einleitung  
@@ -55,56 +57,6 @@ $ cd meinevagrantvm
  $ cd Pfad\zu\meiner\Vagrant-VM      #Zum Verzeichnis der VM wechseln
   $ vagrant ssh                       #SSH-Verbindung zur VM aufbauen
 
-#### 4.1. Anschliessend können ganz normale Bash-Befehle abgesetzt werden:
-
-Befehl          | Zweck                       |  
---------------- | ----------------            |  
-$ ls -l /bin    | #Bin-Verzeichnis anzeigen   |
-$ df -h         | #Freier Festplattenspeicher |
-$ free -m       | #Freier Arbeitsspeicher     |
-                
-#### 5. VM über VirtualBox-GUI ausschalten      
-
-## Vagrant Befehle 
-
-
-
-# Firewall
-
-## Firewall (UFW) installieren 
- sudo apt-get install ufw
-
-## Wichtige Befehle 
-
-Befehl            | Zweck                                            |  
----------------   | ----------------                                 |  
-Sudo ufw enable   | # Startet den Firewall                           |
-Sudo ufw disable  | # Beendet den Firewall                           |
-Sudo ufw status   | # Status Firewall & die Regeln werden angezeigt  |
-
-![Firewall Status](img/ufwstatus.png)
-
-# Reverse Proxy
-
-
-## Installation
-
-#### Module installieren
-sudo apt-get install libapache2-mod-proxy-html
-sudo apt-get install libxml2-dev
-
-#### Module in Apache aktivieren 
-sudo a2enmod proxy
-sudo a2enmod proxy_html
-sudo a2enmod proxy_http 
-
-#### Datei im Ordner Apache2 ergänzen 
-/etc/apache2/apache2.conf -> ServerName localhost 
-sudo service apache2 restart
-
-
-## VM erstellen
-***
 1. VirtualBox starten
 2. Links oben, innerhalb der Anwendung, auf `Neu` klicken
 3. Im neuen Fenster folgende Informationen eintragen:
@@ -125,3 +77,69 @@ sudo service apache2 restart
 9. Alle Änderungen speichern und die VM starten
 10. Den Installationsanweisungen der OS-Installation folgen und anschliessend zu Abschnitt "VM einrichten" gehen
 
+#### 4.1. Anschliessend können ganz normale Bash-Befehle abgesetzt werden:
+
+Befehl          | Zweck                       |  
+--------------- | ----------------            |  
+$ ls -l /bin    | #Bin-Verzeichnis anzeigen   |
+$ df -h         | #Freier Festplattenspeicher |
+$ free -m       | #Freier Arbeitsspeicher     |
+                
+#### 5. VM über VirtualBox-GUI ausschalten      
+
+## Vagrant Befehle 
+
+# Firewall
+
+## Firewall (UFW) installieren 
+ sudo apt-get install ufw
+
+## Wichtige Befehle 
+
+Befehl            | Zweck                                            |  
+---------------   | ----------------                                 |  
+Sudo ufw enable   | # Startet den Firewall                           |
+Sudo ufw disable  | # Beendet den Firewall                           |
+Sudo ufw status   | # Status Firewall & die Regeln werden angezeigt  |
+
+![Firewall Status](img/ufwstatus.png)
+
+# ReverseProxy
+
+
+## Installation
+
+#### Module installieren
+sudo apt-get install libapache2-mod-proxy-html
+sudo apt-get install libxml2-dev
+
+#### Module in Apache aktivieren 
+sudo a2enmod proxy
+sudo a2enmod proxy_html
+sudo a2enmod proxy_http 
+
+#### Datei im Ordner Apache2 ergänzen 
+/etc/apache2/apache2.conf -> ServerName localhost 
+sudo service apache2 restart
+
+# Sicherheitsmassnahmen
+
+
+## Benutzer
+
+Benutzer          | Funktion                                                                                                  |  
+---------------   | ----------------------------------------------------------------------------------------------------------|  
+root              | # Der Systemverwalter unter Linux                                                                         |
+nobody            | # Wird von Prozessen als Benutzererkennung verwendet, wenn nur ein Minimum an Rechten vergeben werden soll|
+cupsys            | # Benutzer des Druckdienstes CUPS                                                                         |
+www-data          | # Benutzer des Webservers Apache                                                                          |
+## Authentisierung
+Die Authentisierung stellt den Nachweis einer Person dar, dass sie tatsächlich diejenige Person ist, die sie vorgibt zu sein. Eine Person legt also Nachweise vor, die ihre Identität bestätigen sollen. Je nach der eingesetzten Authentisierungsmethode kann die Person ihre Identität unter anderem auf folgenden Wegen behaupten:
+
+* sie hat geheime Informationen, die nur ihr bekannt sind (z.B. Passwort)
+* sie besitzt einen Identifizierungsgegenstand (z.B. Personalausweis)
+* sie ist selbst das Identifizierungsobjekt (z.B. biometrische Merkmale wie Fingerabdruck).
+
+## Authorisierung
+
+Die Autorisierung ist die Einräumung von speziellen Rechten. War die Identifizierung einer Person erfolgreich, heißt es noch nicht automatisch, dass diese Person bereitgesellte Dienste und Leistungen nutzen darf. Darüber entscheidet die Autorisierung.
